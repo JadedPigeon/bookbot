@@ -1,4 +1,5 @@
 from stats import word_count, character_count, dictionary_sort
+import sys
 
 def get_book_text(file_path):
     with open(file_path) as f:
@@ -8,7 +9,13 @@ def get_book_text(file_path):
 
 
 def main():
-    book_text = get_book_text("books/frankenstein.txt")
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
+    book_path = sys.argv[1]
+
+    book_text = get_book_text(book_path)
     words = word_count(book_text)
     book_characters = character_count(book_text)
     sorted_character_counts = dictionary_sort(book_characters)
@@ -22,6 +29,7 @@ def main():
     for item in sorted_character_counts:
         if item["character"].isalpha():
             print(f"{item["character"]}: {item["count"]}")
+
 
 
 
